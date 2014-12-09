@@ -23,7 +23,7 @@
 	    "yiisoft/yii": "1.1.14"
     },
     "autoload": {
-        "psr-4": { "Urbanindo\\Yii\\Component\\Logger": "" }
+        "psr-0": { "Urbanindo\\Yii\\Component\\Logger": "" }
     },
     "target-dir": "Urbanindo/Yii/Component/Logger"
 }

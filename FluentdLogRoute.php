@@ -20,10 +20,10 @@ use Fluent\Logger\FluentLogger;
 class FluentdLogRoute extends CLogRoute
 {
     /* @var string host name */
-    protected $host;
+    protected $host = FluentLogger::DEFAULT_ADDRESS;
 
     /* @var int port number. when you wanna use unix domain socket. set port to 0 */
-    protected $port;
+    protected $port = FluentLogger::DEFAULT_LISTEN_PORT;
 
     /* @var string Various style transport: `tcp://localhost:port` */
     protected $transport;
@@ -71,10 +71,15 @@ class FluentdLogRoute extends CLogRoute
     protected function processLogs($logs) {
         $tag = $logs[2];
         $data = [
-            'content' => $logs[0],
             'level' => $logs[1],
             'timestamp' => $logs[3],
             ];
+        
+        if (is_array($logs[0])) {
+            array_merge($data, $logs[0]);
+        } else {
+            $data['content'] = $logs[0],
+        }
         $_logger->post($tag,$data);
     }
 
