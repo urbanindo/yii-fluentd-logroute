@@ -1,0 +1,29 @@
+{
+	"name": "urbanindo/yii-fluentd-logroute",
+    "type": "library",
+    "description": "Logroute for Yii 1.1.* using fluentd",
+    "keywords": ["log","logging"],
+    "homepage": "https://github.com/urbanindo/yii-fluentd-logroute",
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Adinata",
+            "email": "mail.dieend@gmail.com"
+        },
+        {
+            "name": "Petra Barus",
+            "email": "petra.barus@gmail.com"
+        }
+    ],
+    "require": {
+		"php": ">=5.3.0",
+        "fluent/logger": "v0.3.7"
+    },
+	"require-dev": {
+	    "yiisoft/yii": "1.1.14"
+    },
+    "autoload": {
+        "psr-4": { "Urbanindo\\Yii\\Component\\Logger": "" }
+    },
+    "target-dir": "Urbanindo/Yii/Component/Logger"
+}
