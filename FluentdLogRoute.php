@@ -17,7 +17,7 @@ use Fluent\Logger\FluentLogger;
  * @author Adinata <mail.dieend@gmail.com>
  * @since 2014.12.09
  */
-class FluentdLogRoute extends CLogRoute
+class FluentdLogRoute extends \CLogRoute
 {
     /* @var string host name */
     protected $host = FluentLogger::DEFAULT_ADDRESS;
@@ -35,6 +35,13 @@ class FluentdLogRoute extends CLogRoute
     protected $packer;
 
     protected $tagFormat = 'yii.%l.%c';
+    
+    public function setHost($host) {
+        $this->host= $host;
+    }
+    public function setPort($port) {
+        $this->port= $port;
+    }
 
     protected $options = array(
         "socket_timeout"     => FluentLogger::SOCKET_TIMEOUT,
@@ -54,7 +61,7 @@ class FluentdLogRoute extends CLogRoute
      */
     public function init()
     {
-        $_logger = new FluentLogger($host, $port, $options, $packer);
+        $this->_logger = new FluentLogger($this->host, $this->port, $this->options, $this->packer);
     }
 
     /**
@@ -69,24 +76,22 @@ class FluentdLogRoute extends CLogRoute
      *   [3] => timestamp (float, obtained by microtime(true));
      */
     protected function processLogs($logs) {
-        $tag = $logs[2];
-        $data = [
-            'level' => $logs[1],
-            'timestamp' => $logs[3],
-            ];
-        
-        if (is_array($logs[0])) {
-            array_merge($data, $logs[0]);
-        } else {
-            $data['content'] = $logs[0],
+        foreach ($logs as $log) {
+            $tag = $this->createTag($log);
+            $data = [
+                'level' => $log[1],
+                'timestamp' => $log[3],
+                ];
+
+            $data['content'] = $log[0];
+            $this->_logger->post($tag,$data);
         }
-        $_logger->post($tag,$data);
     }
 
-    private function createTag($logs) {
-        $ret = $tagFormat;
-        str_replace("%c", $logs[2], $ret);
-        str_replace("%l", $logs[1], $ret);
+    private function createTag($log) {
+        $ret = $this->tagFormat;
+        $ret = str_replace("%c", $log[2], $ret);
+        $ret = str_replace("%l", $log[1], $ret);
         return $ret;
     }
 }
