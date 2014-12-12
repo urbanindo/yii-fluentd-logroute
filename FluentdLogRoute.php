@@ -51,6 +51,7 @@ class FluentdLogRoute extends \CLogRoute
         "usleep_wait"        => FluentLogger::USLEEP_WAIT,
         "persistent"         => false,
         "retry_socket"       => true,
+        "max_write_retry"    => FluentLogger::MAX_WRITE_RETRY,
     );
 
     private $_logger;
@@ -61,6 +62,11 @@ class FluentdLogRoute extends \CLogRoute
      */
     public function init()
     {
+        if ($this->packer == null) {
+            $this->packer = new MsgpackOrJsonPacker()
+        } else if(!($this->packer instanceof IPacker)) {
+            $this->packer = Yii::createComponent($this->packer);
+        } 
         $this->_logger = new FluentLogger($this->host, $this->port, $this->options, $this->packer);
     }
 

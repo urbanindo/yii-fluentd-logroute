@@ -17,7 +17,7 @@
     ],
     "require": {
 		"php": ">=5.3.0",
-        "fluent/logger": "v0.3.7"
+        "fluent/logger": "v0.3.8"
     },
 	"require-dev": {
 	    "yiisoft/yii": "1.1.14"

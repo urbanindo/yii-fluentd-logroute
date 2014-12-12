@@ -48,7 +48,8 @@ Yii::getLogger()->log(['test'=>'test-message'], CLogger::LEVEL_INFO, 'fluent-log
 - `options` :
  - `socket_timeout`     => `FluentLogger::SOCKET_TIMEOUT`, // default 3 s
  - `connection_timeout` => `FluentLogger::CONNECTION_TIMEOUT`, // default 3 s
- - `retry_socket`       => `true`, // retry in failure. Max retry is 5 times
+ - `retry_socket`       => `true`, // retry in failure. 
+ - `max_write_retry`    => `FluentLogger::MAX_WRITE_RETRY` // default max retry is 5 times
  - `backoff_mode`       => `FluentLogger::BACKOFF_TYPE_USLEEP`, // backoff type. `0x01` == `BACKOFF_TYPE_EXPONENTIAL`, `0x02` == `BACKOFF_TYPE_USLEEP`
  - `backoff_base`       => `3`, // used in exponential backoff_mode, 0.003 sec, 0.009 sec, 0.027 sec, 0.081 sec, 0.243 sec
  - `usleep_wait`        => `FluentLogger::USLEEP_WAIT`, // 1000, equal to 0.001 ms
