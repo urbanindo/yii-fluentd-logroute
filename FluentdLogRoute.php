@@ -63,10 +63,10 @@ class FluentdLogRoute extends \CLogRoute
     public function init()
     {
         if ($this->packer == null) {
-            $this->packer = new MsgpackOrJsonPacker()
-        } else if(!($this->packer instanceof IPacker)) {
+            $this->packer = new MsgpackOrJsonPacker();
+        } else if (!($this->packer instanceof \Fluent\Logger\PackerInterface)) {
             $this->packer = Yii::createComponent($this->packer);
-        } 
+        }
         $this->_logger = new FluentLogger($this->host, $this->port, $this->options, $this->packer);
     }
 

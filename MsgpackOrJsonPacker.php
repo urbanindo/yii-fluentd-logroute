@@ -1,12 +1,11 @@
 <?php
 namespace Urbanindo\Yii\Component\Logger;
 
-class MsgpackOrJsonPacker implements \Fluent\Logger\PackerInterface
-{
-    public function __construct()
-    {
-    }
+use Fluent\Logger\Entity;
+use Fluent\Logger\PackerInterface;
 
+class MsgpackOrJsonPacker implements PackerInterface
+{
     /**
      * pack entity with msgpack protocol.
      * {@link https://github.com/msgpack/msgpack-php}
