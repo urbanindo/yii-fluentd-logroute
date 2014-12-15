@@ -20,21 +20,21 @@ use Fluent\Logger\FluentLogger;
 class FluentdLogRoute extends \CLogRoute
 {
     /* @var string host name */
-    protected $host = FluentLogger::DEFAULT_ADDRESS;
+    public $host = FluentLogger::DEFAULT_ADDRESS;
 
     /* @var int port number. when you wanna use unix domain socket. set port to 0 */
-    protected $port = FluentLogger::DEFAULT_LISTEN_PORT;
+    public $port = FluentLogger::DEFAULT_LISTEN_PORT;
 
     /* @var string Various style transport: `tcp://localhost:port` */
-    protected $transport;
+    public $transport;
 
     /* @var resource */
-    protected $socket;
+    public $socket;
 
     /* @var PackerInterface */
-    protected $packer;
+    public $packer = null;
 
-    protected $tagFormat = 'yii.%l.%c';
+    public $tagFormat = 'yii.%l.%c';
     
     public function setHost($host) {
         $this->host= $host;
