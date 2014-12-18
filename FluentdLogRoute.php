@@ -36,6 +36,14 @@ class FluentdLogRoute extends \CLogRoute
 
     public $tagFormat = 'yii.%l.%c';
     
+    public $level_key = 'level';
+
+    public $timestamp_key = 'timestamp';
+
+    public $content_key = 'content';
+
+    public $message_key = 'message';
+    
     public function setHost($host) {
         $this->host= $host;
     }
@@ -85,11 +93,16 @@ class FluentdLogRoute extends \CLogRoute
         foreach ($logs as $log) {
             $tag = $this->createTag($log);
             $data = [
-                'level' => $log[1],
-                'timestamp' => $log[3],
+                $this->level_key => $log[1],
+                $this->timestamp_key => $log[3],
                 ];
-
-            $data['content'] = $log[0];
+            if (is_array($log[0])) {
+                $data[$this->content_key] = $log[0];
+            } else {
+                $data[$this->content_key] = [
+                    $this->message_key => $log[0],
+                ];
+            }
             $this->_logger->post($tag,$data);
         }
     }
